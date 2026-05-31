@@ -29,11 +29,54 @@ El usuario puede restringir qué acciones puedes realizar. Si intentas ejecutar 
 - **Indica el modo activo** y cómo cambiarlo: *MCP Manager → Calendly → Configuración → Modo de Operación*.
 - **NO intentes rodear la restricción** usando otras herramientas.
 
-| Modo | Acciones disponibles |
-|------|---------------------|
-| `full` (Manejo Personal Completo) | Todas las herramientas: ver, cancelar, webhooks, links |
-| `readonly` (Solo Lectura) | Consulta y listados únicamente — sin cancelar, sin crear webhooks ni links |
-| `scheduling_only` (Solo Automatizaciones) | Solo perfil, tipos de evento, generar links y disponibilidad |
+### Detalle de Herramientas por Modo
+
+#### 1. Modo `full` (Manejo Personal Completo)
+* **Descripción**: Todo permitido.
+* **Herramientas Permitidas**: **Todas** las herramientas del módulo están habilitadas.
+* **Herramientas Bloqueadas**: Ninguna.
+
+#### 2. Modo `readonly` (Solo Lectura)
+* **Descripción**: Consulta y listado de eventos e invitados únicamente.
+* **Herramientas Permitidas**:
+  * `urano_calendly_user_getprofile`
+  * `urano_calendly_eventtypes_list`
+  * `urano_calendly_eventtypes_getdetails`
+  * `urano_calendly_events_listtoday`
+  * `urano_calendly_events_listthisweek`
+  * `urano_calendly_events_listupcoming`
+  * `urano_calendly_events_getdetails`
+  * `urano_calendly_invitees_list`
+  * `urano_calendly_invitees_getdetails`
+  * `urano_calendly_scheduling_listlinks`
+  * `urano_calendly_availability_check`
+  * `urano_calendly_webhooks_list`
+* **Herramientas Bloqueadas (NO usar)**:
+  * `urano_calendly_events_cancel`
+  * `urano_calendly_scheduling_generatelink`
+  * `urano_calendly_webhooks_create`
+  * `urano_calendly_webhooks_delete`
+
+#### 3. Modo `scheduling_only` (Solo Automatizaciones de Agendamiento)
+* **Descripción**: Solo agendar y verificar disponibilidad, sin acceso a eventos existentes.
+* **Herramientas Permitidas**:
+  * `urano_calendly_user_getprofile`
+  * `urano_calendly_eventtypes_list`
+  * `urano_calendly_eventtypes_getdetails`
+  * `urano_calendly_scheduling_generatelink`
+  * `urano_calendly_scheduling_listlinks`
+  * `urano_calendly_availability_check`
+* **Herramientas Bloqueadas (NO usar)**:
+  * `urano_calendly_events_listtoday`
+  * `urano_calendly_events_listthisweek`
+  * `urano_calendly_events_listupcoming`
+  * `urano_calendly_events_getdetails`
+  * `urano_calendly_events_cancel`
+  * `urano_calendly_invitees_list`
+  * `urano_calendly_invitees_getdetails`
+  * `urano_calendly_webhooks_list`
+  * `urano_calendly_webhooks_create`
+  * `urano_calendly_webhooks_delete`
 
 ---
 

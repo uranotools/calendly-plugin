@@ -86,12 +86,16 @@ export class SchedulingPlugin {
             const { event_type_uri, max_event_count } = payload;
             if (!event_type_uri) throw new Error("Se requiere 'event_type_uri'.");
 
-            const { userUri } = await getCurrentUserAndOrg(this.token);
+            // Safe normalization: reconstruct full URI if the agent passes only the UUID
+            let targetUri = event_type_uri.trim();
+            if (!targetUri.startsWith('http://') && !targetUri.startsWith('https://')) {
+                targetUri = `https://api.calendly.com/event_types/${targetUri}`;
+            }
 
             const body: any = {
                 max_event_count: max_event_count ? parseInt(max_event_count, 10) : 1,
-                owner: userUri,
-                owner_type: 'users',
+                owner: targetUri,
+                owner_type: 'EventType',
             };
 
             const data = await calendlyFetch('/scheduling_links', this.token, {

@@ -7,6 +7,11 @@ export const CalendlyConfig = {
     inCloud: true,
     inDesktop: true,
 
+    // ── Engine Plugin Configuration (Hybrid Support) ───────────────────────
+    enginePlugin: true,
+    engineHooks: ['onSessionStart'],
+    enginePluginPath: 'Plugins/Engine/CalendlyEnginePlugin',
+
     // ── Plugins habilitados ────────────────────────────────────────────────
     enabledPlugins: ['User', 'EventTypes', 'Events', 'Invitees', 'Scheduling', 'Availability', 'Webhooks'],
 
@@ -26,6 +31,7 @@ export const CalendlyConfig = {
                 { label: '👁️ Solo Lectura (sin modificar)', value: 'readonly' },
                 { label: '🤖 Solo Automatizaciones (links + disponibilidad)', value: 'scheduling_only' },
             ],
+            perAgent: true
         },
         {
             name: 'CALENDLY_TOKEN',
@@ -72,11 +78,13 @@ export const CalendlyConfig = {
                 list: {
                     label: 'Listar Tipos de Eventos',
                     fields: [
-                        { name: 'active', type: 'select', label: 'Estado', options: [
-                            { label: 'Todos', value: 'all' },
-                            { label: 'Solo activos', value: 'true' },
-                            { label: 'Solo inactivos', value: 'false' },
-                        ]},
+                        {
+                            name: 'active', type: 'select', label: 'Estado', options: [
+                                { label: 'Todos', value: 'all' },
+                                { label: 'Solo activos', value: 'true' },
+                                { label: 'Solo inactivos', value: 'false' },
+                            ]
+                        },
                     ],
                 },
                 getDetails: {
@@ -97,10 +105,12 @@ export const CalendlyConfig = {
                         { name: 'count', type: 'text', label: 'Cantidad máxima (default: usa configuración)' },
                         { name: 'min_start_time', type: 'text', label: 'Desde (ISO 8601, ej: 2025-06-01T00:00:00Z)' },
                         { name: 'max_start_time', type: 'text', label: 'Hasta (ISO 8601)' },
-                        { name: 'status', type: 'select', label: 'Estado del evento', options: [
-                            { label: 'Activos', value: 'active' },
-                            { label: 'Cancelados', value: 'canceled' },
-                        ]},
+                        {
+                            name: 'status', type: 'select', label: 'Estado del evento', options: [
+                                { label: 'Activos', value: 'active' },
+                                { label: 'Cancelados', value: 'canceled' },
+                            ]
+                        },
                     ],
                 },
                 getDetails: {
@@ -134,11 +144,13 @@ export const CalendlyConfig = {
                     label: 'Listar Invitados de un Evento',
                     fields: [
                         { name: 'event_uri', type: 'required', label: 'URI del Evento' },
-                        { name: 'status', type: 'select', label: 'Estado del invitado', options: [
-                            { label: 'Todos', value: 'all' },
-                            { label: 'Activos', value: 'active' },
-                            { label: 'Cancelados', value: 'canceled' },
-                        ]},
+                        {
+                            name: 'status', type: 'select', label: 'Estado del invitado', options: [
+                                { label: 'Todos', value: 'all' },
+                                { label: 'Activos', value: 'active' },
+                                { label: 'Cancelados', value: 'canceled' },
+                            ]
+                        },
                     ],
                 },
                 getDetails: {
@@ -193,10 +205,12 @@ export const CalendlyConfig = {
                     fields: [
                         { name: 'url', type: 'required', label: 'URL del endpoint receptor' },
                         { name: 'events', type: 'text', label: 'Eventos (separados por coma: invitee.created,invitee.canceled)' },
-                        { name: 'scope', type: 'select', label: 'Alcance', options: [
-                            { label: 'Usuario', value: 'user' },
-                            { label: 'Organización', value: 'organization' },
-                        ]},
+                        {
+                            name: 'scope', type: 'select', label: 'Alcance', options: [
+                                { label: 'Usuario', value: 'user' },
+                                { label: 'Organización', value: 'organization' },
+                            ]
+                        },
                     ],
                 },
                 delete: {

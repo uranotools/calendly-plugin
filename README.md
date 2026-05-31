@@ -3,7 +3,7 @@
   
   # 📅 Calendly AI Plugin — Urano Hybrid MCP
 
-  [![Urano Core Compatibility](https://img.shields.io/badge/Urano_Core-%E2%89%A5_2.0.0-blueviolet?style=for-the-badge&logo=electron)](https://github.com/andygomezb7/UranoDesktop)
+  [![Urano Core Compatibility](https://img.shields.io/badge/Urano_Core-%E2%89%A5_2.0.0-blueviolet?style=for-the-badge&logo=electron)](https://github.com/uranotools/UranoDesktop)
   [![Type](https://img.shields.io/badge/Plugin_Type-Hybrid_MCP_%2B_Engine-cyan?style=for-the-badge&logo=typescript)](https://github.com/uranotools/calendly-plugin)
   [![Licence](https://img.shields.io/badge/Licence-MIT-green?style=for-the-badge)](https://opensource.org/licenses/MIT)
 

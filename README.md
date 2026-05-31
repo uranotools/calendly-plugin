@@ -1,6 +1,16 @@
-# 📅 Calendly AI Plugin — Urano MCP
+<div align="center">
+  <img src="https://cdn.simpleicons.org/calendly" alt="Calendly Logo" width="120" height="120" />
+  
+  # 📅 Calendly AI Plugin — Urano Hybrid MCP
 
-Plugin MCP de integración completa con **Calendly** para el ecosistema Urano. Permite que los agentes de IA gestionen agenda, consulten disponibilidad, administren invitados y generen links de agendamiento directamente desde el chat.
+  [![Urano Core Compatibility](https://img.shields.io/badge/Urano_Core-%E2%89%A5_2.0.0-blueviolet?style=for-the-badge&logo=electron)](https://github.com/andygomezb7/UranoDesktop)
+  [![Type](https://img.shields.io/badge/Plugin_Type-Hybrid_MCP_%2B_Engine-cyan?style=for-the-badge&logo=typescript)](https://github.com/uranotools/calendly-plugin)
+  [![Licence](https://img.shields.io/badge/Licence-MIT-green?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
+  **El plugin definitivo de productividad para agendar, gestionar y automatizar reuniones en Calendly de manera 100% conversacional.**
+
+  *Perfectamente integrado como MCP Tool Provider e inyección dinámica a través de Urano Engine Plugin.*
+</div>
 
 ---
 
@@ -17,6 +27,29 @@ Plugin MCP de integración completa con **Calendly** para el ecosistema Urano. P
 | **Webhooks** | `list`, `create`, `delete` | Suscripciones de webhook en tiempo real |
 
 **Total: 16 herramientas MCP** registradas bajo el namespace `urano_calendly_*`
+
+---
+
+## ⚡ Arquitectura Híbrida Premium
+
+Este plugin no es solo un conjunto de herramientas MCP convencionales. Se ejecuta como un **Engine Plugin híbrido de Urano**, integrándose directamente en el ciclo de vida de la conversación (`RuntimeLoop`):
+
+```mermaid
+graph TD
+    A[Sesión del Chat] --> B(EnginePluginManager)
+    B -->|onSessionStart| C[CalendlyEnginePlugin]
+    C -->|Lee PLUGIN_MODE en Vault| D{¿Qué modo está activo?}
+    D -->|full| E[Sin Restricciones]
+    D -->|readonly| F[Inyecta instrucciones de Solo Lectura]
+    D -->|scheduling_only| G[Inyecta instrucciones de Solo Agendamiento]
+    F & G --> H[Prompt del Agente Modificado]
+    H --> I[El agente conoce y respeta las restricciones de antemano]
+```
+
+### Beneficios del Engine Plugin Dinámico:
+1. **Auto-Consciencia del Agente**: En lugar de descubrir las limitaciones cuando falla una API, el agente sabe de antemano qué puede y qué no puede ofrecer basándose en tu configuración guardada.
+2. **Políticas Proactivas**: El agente rechazará de manera proactiva acciones destructivas (como cancelaciones) explicándote el modo activo de forma amigable.
+3. **Cero Fugas de Seguridad**: Aunque el agente intente saltarse el prompt del sistema, las llamadas de herramientas MCP reales están protegidas mediante el middleware estricto `mode-guard` que audita cada petición en tiempo de ejecución.
 
 ---
 
@@ -39,12 +72,11 @@ Plugin MCP de integración completa con **Calendly** para el ecosistema Urano. P
    ```bash
    npm run build
    ```
-3. Copia `SKILL.md` a `dist/`:
+3. Ejecuta la tarea de empaquetado para generar el archivo de distribución:
    ```bash
-   copy SKILL.md dist\SKILL.md
+   npm run urano-launch
    ```
-4. Comprime el **contenido** de `dist/` (no la carpeta) en `Calendly.zip`.
-5. En **Urano → MCP Manager → Instalar MCP (.zip)**, sube el archivo.
+4. En **Urano → MCP Manager → Instalar MCP (.zip)**, sube el archivo `calendly-aiplugin.zip` generado en el directorio raíz.
 
 ---
 
@@ -86,7 +118,10 @@ Una vez instalado, ve a **MCP Manager → Calendly → Configuración** y comple
 ├── 📄 package.json                      ← Dependencias y scripts de build
 ├── 📄 tsconfig.json                     ← Config TypeScript (silencia errores @core)
 ├── 📄 urano.d.ts                        ← Tipos de módulos internos de Urano
+├── 📄 calendly-aiplugin.zip             ← Archivo de distribución del Plugin
 └── 📁 Plugins/
+    ├── 📁 Engine/
+    │   └── 📄 CalendlyEnginePlugin.ts   ← Engine Plugin (inyección dinámica de prompt)
     ├── 📁 User/
     │   └── 📄 UserPlugin.ts             ← Perfil del usuario autenticado
     ├── 📁 EventTypes/
